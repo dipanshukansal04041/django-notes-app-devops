@@ -1,0 +1,35 @@
+apiVersion: apps/v1
+kind: Deployment
+
+metadata:
+  name: django-deployment
+  namespace: django-ns
+
+spec:
+  replicas: 2
+
+  selector:
+    matchLabels:
+      app: django-app
+
+  template:
+    metadata:
+      labels:
+        app: django-app
+
+    spec:
+      containers:
+        - name: django
+          image: dipanshuk16/django-notes-app:latest
+
+          ports:
+            - containerPort: 8000
+
+          volumeMounts:
+            - name: django-storage
+              mountPath: /app/data
+
+      volumes:
+        - name: django-storage
+          persistentVolumeClaim:
+            claimName: local-pvc
