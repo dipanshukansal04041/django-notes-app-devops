@@ -4,20 +4,25 @@ pipeline {
     }
 
     stages {
-        stage('Agent Test') {
-            steps {
-                echo 'Pipeline is running on django-agent'
-            }
-        }
 
-        stage('System Check') {
+        stage('Agent Test') {
             steps {
                 sh 'whoami'
                 sh 'hostname'
-                sh 'pwd'
-                sh 'git --version'
+            }
+        }
+
+        stage('Docker Test') {
+            steps {
                 sh 'docker --version'
+                sh 'docker ps'
+            }
+        }
+
+        stage('Kubernetes Test') {
+            steps {
                 sh 'kubectl version --client'
+                sh 'kubectl get nodes'
             }
         }
     }
