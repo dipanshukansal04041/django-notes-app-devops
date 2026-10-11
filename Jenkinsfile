@@ -1,3 +1,4 @@
+@Library('my-shared-library') _
 pipeline {
 
     agent {
@@ -43,10 +44,7 @@ pipeline {
             steps {
                 echo 'Building Docker image...'
 
-                sh '''
-                    docker build \
-                        -t ${IMAGE_NAME}:${IMAGE_TAG} .
-                '''
+                dockerBuild("${IMAGE_NAME}:${IMAGE_TAG}")
             }
         }
 
